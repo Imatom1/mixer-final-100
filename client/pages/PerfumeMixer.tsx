@@ -638,15 +638,15 @@ export default function PerfumeMixer() {
                             });
                         }}
                         variant="outline"
-                        className="w-full border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white font-semibold text-xs h-7"
+                        className="w-full border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white font-semibold text-lg h-10"
                       >
-                        <Copy className="w-3 h-3 mr-1" />
+                        <Copy className="w-5 h-5 mr-2" />
                         Copy Blend Request
                       </Button>
 
                       {/* Instructions */}
                       <div className="bg-black-800 border border-black-700 rounded-lg p-2 mt-2">
-                        <p className="text-base font-semibold text-gold-300 text-center mb-1">
+                        <p className="text-xl sm:text-2xl font-bold text-gold-300 text-center mb-2">
                           📋 How to Use Your Blend Request
                         </p>
                         <p className="text-sm text-gold-300 text-center">
