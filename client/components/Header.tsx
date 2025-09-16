@@ -43,8 +43,8 @@ export function Header() {
               const isActive = item.href === location.pathname;
 
               const base = "flex items-center gap-2 px-3 py-2 rounded-lg font-semibold transition-all duration-200";
-              const emphasized = item.name === "Quiz";
-              const classes = emphasized
+              const isMixer = item.name === "Mixer";
+              const classes = isMixer
                 ? `${base} bg-gold-500 text-black-950 shadow-md`
                 : isActive
                 ? `${base} bg-gold-500 text-black-950 shadow-md`
@@ -54,7 +54,7 @@ export function Header() {
                 <Link key={item.name} to={item.href} className={classes}>
                   <Icon className="w-6 h-6" />
                   {item.name}
-                                  </Link>
+                </Link>
               );
             })}
           </nav>
@@ -83,24 +83,21 @@ export function Header() {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.href === location.pathname;
-                const emphasized = item.name === "Quiz";
-
+                const isMixer = item.name === "Mixer";
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg font-semibold transition-colors ${
-                      emphasized
-                        ? "bg-gold-500 text-black-950"
-                        : isActive
+                      isMixer || isActive
                         ? "bg-gold-500 text-black-950"
                         : "text-gold-300 hover:bg-gold-600 hover:text-black-950"
                     }`}
                   >
                     <Icon className="w-6 h-6" />
                     {item.name}
-                                      </Link>
+                  </Link>
                 );
               })}
             </div>

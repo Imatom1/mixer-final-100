@@ -924,7 +924,7 @@ export default function PerfumeMixer() {
 
                             setIngredients(balancedIngredients);
                           }}
-                          showCompareButton={false}
+                          
                         />
                       </div>
                     ))}
