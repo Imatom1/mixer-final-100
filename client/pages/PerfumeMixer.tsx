@@ -444,7 +444,7 @@ export default function PerfumeMixer() {
       <div className="flex-1 max-w-7xl mx-auto px-1 sm:px-2 md:px-3 py-1 sm:py-2">
         <div className="grid grid-cols-1 gap-1 sm:gap-2 min-h-[calc(100vh-8rem)]">
           {/* Left Panel - Mixer */}
-          <div className="flex flex-col min-h-[400px] mb-4">
+          <div className="flex flex-col h-[500px] mb-4">
             <Card className="bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 shadow-lg flex-1 flex flex-col">
               <CardHeader className="p-1.5 sm:p-2 flex-shrink-0">
                 <CardTitle className="text-sm sm:text-base font-bold text-gold-300 flex items-center justify-between">
@@ -466,7 +466,7 @@ export default function PerfumeMixer() {
                 </CardTitle>
               </CardHeader>
 
-              <CardContent className="p-1.5 sm:p-2">
+              <CardContent className="p-1.5 sm:p-2 flex-1 overflow-y-auto">
                 {/* Ingredients List */}
                 <div className="space-y-1">
                   {ingredients.length === 0 ? (
@@ -608,10 +608,10 @@ export default function PerfumeMixer() {
                     <div className="mt-1.5 space-y-1">
                       {/* Blend Request Text */}
                       <div className="bg-black-800 border border-gold-300 rounded-lg p-2">
-                        <p className="text-xs font-medium text-gold-300 mb-1">
+                        <p className="text-base font-semibold text-gold-300 mb-1">
                           Your Blend Request:
                         </p>
-                        <div className="bg-black-700 border border-gray-200 rounded p-2 text-xs text-gold-400 font-mono whitespace-pre-line">
+                        <div className="bg-black-700 border border-gray-200 rounded p-2 text-sm text-gold-400 font-mono whitespace-pre-line">
                           {`Blend: ${ingredients.map((ing) => `${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`}
                         </div>
                       </div>
@@ -638,18 +638,18 @@ export default function PerfumeMixer() {
                             });
                         }}
                         variant="outline"
-                        className="w-full border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white font-semibold text-xs h-7"
+                        className="w-full border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white font-semibold text-lg h-10"
                       >
-                        <Copy className="w-3 h-3 mr-1" />
+                        <Copy className="w-5 h-5 mr-2" />
                         Copy Blend Request
                       </Button>
 
                       {/* Instructions */}
                       <div className="bg-black-800 border border-black-700 rounded-lg p-2 mt-2">
-                        <p className="text-sm font-medium text-gold-300 text-center mb-1">
+                        <p className="text-xl sm:text-2xl font-bold text-gold-300 text-center mb-2">
                           📋 How to Use Your Blend Request
                         </p>
-                        <p className="text-xs text-gold-300 text-center">
+                        <p className="text-sm text-gold-300 text-center">
                           Copy the text above, then paste it into our perfume
                           request form. Our team will review your custom blend
                           and get back to you with availability and pricing.
@@ -923,8 +923,9 @@ export default function PerfumeMixer() {
                             );
 
                             setIngredients(balancedIngredients);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
-                          
+
                         />
                       </div>
                     ))}
