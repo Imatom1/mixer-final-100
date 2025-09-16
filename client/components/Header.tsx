@@ -43,7 +43,10 @@ export function Header() {
               const isActive = item.href === location.pathname;
 
               const base = "flex items-center gap-2 px-3 py-2 rounded-lg font-semibold transition-all duration-200";
-              const classes = isActive
+              const isMixer = item.name === "Mixer";
+              const classes = isMixer
+                ? `${base} bg-gold-500 text-black-950 shadow-md`
+                : isActive
                 ? `${base} bg-gold-500 text-black-950 shadow-md`
                 : `${base} text-gold-300 hover:bg-gold-600 hover:text-black-950`;
 
@@ -80,13 +83,14 @@ export function Header() {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.href === location.pathname;
+                const isMixer = item.name === "Mixer";
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg font-semibold transition-colors ${
-                      isActive
+                      isMixer || isActive
                         ? "bg-gold-500 text-black-950"
                         : "text-gold-300 hover:bg-gold-600 hover:text-black-950"
                     }`}
