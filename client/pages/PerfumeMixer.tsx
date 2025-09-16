@@ -608,10 +608,10 @@ export default function PerfumeMixer() {
                     <div className="mt-1.5 space-y-1">
                       {/* Blend Request Text */}
                       <div className="bg-black-800 border border-gold-300 rounded-lg p-2">
-                        <p className="text-xs font-medium text-gold-300 mb-1">
+                        <p className="text-base font-semibold text-gold-300 mb-1">
                           Your Blend Request:
                         </p>
-                        <div className="bg-black-700 border border-gray-200 rounded p-2 text-xs text-gold-400 font-mono whitespace-pre-line">
+                        <div className="bg-black-700 border border-gray-200 rounded p-2 text-sm text-gold-400 font-mono whitespace-pre-line">
                           {`Blend: ${ingredients.map((ing) => `${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`}
                         </div>
                       </div>
@@ -646,10 +646,10 @@ export default function PerfumeMixer() {
 
                       {/* Instructions */}
                       <div className="bg-black-800 border border-black-700 rounded-lg p-2 mt-2">
-                        <p className="text-sm font-medium text-gold-300 text-center mb-1">
+                        <p className="text-base font-semibold text-gold-300 text-center mb-1">
                           📋 How to Use Your Blend Request
                         </p>
-                        <p className="text-xs text-gold-300 text-center">
+                        <p className="text-sm text-gold-300 text-center">
                           Copy the text above, then paste it into our perfume
                           request form. Our team will review your custom blend
                           and get back to you with availability and pricing.
@@ -923,8 +923,9 @@ export default function PerfumeMixer() {
                             );
 
                             setIngredients(balancedIngredients);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
-                          
+
                         />
                       </div>
                     ))}

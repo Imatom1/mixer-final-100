@@ -68,6 +68,7 @@ export default function Compare() {
       !comparisonList.find((p) => p.id === perfume.id)
     ) {
       setComparisonList((prev) => [...prev, perfume]);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
