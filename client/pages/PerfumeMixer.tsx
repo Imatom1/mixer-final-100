@@ -441,11 +441,11 @@ export default function PerfumeMixer() {
         </div>
       </div>
 
-      <div className="flex-1 max-w-7xl mx-auto px-1 sm:px-2 md:px-3 py-1 sm:py-2">
-        <div className="grid grid-cols-1 gap-1 sm:gap-2 min-h-[calc(100vh-8rem)]">
+      <div className="max-w-7xl mx-auto px-1 sm:px-2 md:px-3 py-1 sm:py-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1 sm:gap-2 md:min-h-[calc(100vh-8rem)] items-stretch">
           {/* Left Panel - Mixer */}
-          <div className="flex flex-col h-[500px] mb-4">
-            <Card className="bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 shadow-lg flex-1 flex flex-col">
+          <div className="flex flex-col md:min-h-[500px] mb-4">
+            <Card className="bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 shadow-lg flex flex-col">
               <CardHeader className="p-1.5 sm:p-2 flex-shrink-0">
                 <CardTitle className="text-sm sm:text-base font-bold text-gold-300 flex items-center justify-between">
                   <span className="flex items-center gap-1">
@@ -466,7 +466,7 @@ export default function PerfumeMixer() {
                 </CardTitle>
               </CardHeader>
 
-              <CardContent className="p-1.5 sm:p-2 flex-1 overflow-y-auto">
+              <CardContent className="p-1.5 sm:p-2 overflow-y-auto">
                 {/* Ingredients List */}
                 <div className="space-y-1">
                   {ingredients.length === 0 ? (
@@ -664,8 +664,8 @@ export default function PerfumeMixer() {
           </div>
 
           {/* Right Panel - Perfume Browser */}
-          <div className="flex flex-col min-h-[500px]">
-            <Card className="bg-gradient-to-br from-black-800 via-black-700 to-black-600 border border-gold-400 shadow-lg flex-1 flex flex-col">
+          <div className="flex flex-col md:min-h-[500px]">
+            <Card className="bg-gradient-to-br from-black-800 via-black-700 to-black-600 border border-gold-400 shadow-lg flex flex-col">
               <CardHeader className="p-2 sm:p-3 flex-shrink-0">
                 <CardTitle className="text-sm font-bold text-gold-300 flex items-center justify-between">
                   <span className="flex items-center gap-2">
