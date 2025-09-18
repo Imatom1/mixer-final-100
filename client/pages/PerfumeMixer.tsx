@@ -411,6 +411,37 @@ export default function PerfumeMixer() {
 
   const resultProfile = getResultingProfile();
 
+  const scrollToTop = () => {
+    try {
+      if (typeof window !== "undefined" && window.scrollTo) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    try {
+      // Also attempt to scroll documentElement and body for different layouts
+      if (document.documentElement && (document.documentElement as any).scrollTo) {
+        (document.documentElement as any).scrollTo({ top: 0, behavior: "smooth" });
+      }
+      if (document.body && (document.body as any).scrollTo) {
+        (document.body as any).scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    try {
+      const appRoot = document.querySelector("#root") as HTMLElement | null;
+      if (appRoot && appRoot.scrollTo) {
+        appRoot.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (e) {
+      // ignore
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black-800 via-black-800 to-black-800 flex flex-col">
       <Header />
@@ -923,7 +954,7 @@ export default function PerfumeMixer() {
                             );
 
                             setIngredients(balancedIngredients);
-                            window.scrollTo({ top: 0, behavior: "smooth" });
+                            scrollToTop();
                           }}
 
                         />
