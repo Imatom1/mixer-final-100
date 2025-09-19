@@ -137,3 +137,36 @@
     .min-h-screen { min-height: 100svh !important; }
   }
 }
+
+/* Make inner containers expand and remove internal scrollbars */
+/* Targets common Tailwind utility classes generated in this project */
+[class*="overflow-y-auto"],
+[class*="overflow-auto"],
+[class*="overflow-y-scroll"],
+[class*="overflow-scroll"],
+[class*="overflow-x-auto"],
+[class*="overflow-x-scroll"] {
+  overflow: visible !important;
+}
+
+/* Remove max-height constraints applied by Tailwind utilities like max-h-[600px], max-h-screen */
+[class*="max-h-"] {
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* Ensure scroll-area component doesn't force inner scrolling */
+.scroll-area, .scroll-area * {
+  overflow: visible !important;
+}
+
+/* For elements using inline style of max-height via style attribute, prefer visible as well */
+[style*="max-height"] {
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* Keep body scrolling enabled */
+html, body {
+  overflow-y: auto !important;
+}
