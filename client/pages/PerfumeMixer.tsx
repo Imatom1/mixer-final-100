@@ -233,22 +233,34 @@ export default function PerfumeMixer() {
       if (ingredients.find((ing) => ing.perfume.id === perfume.id))
         return false;
 
-      // Search filter
+      // Search filter (tokenized, normalized)
       if (filters.search) {
-        const searchTerm = filters.search.toLowerCase();
-        const searchableText = [
-          perfume.name,
-          perfume.brand,
-          perfume.fragranceProfile,
-          ...perfume.mainAccords,
-          ...perfume.topNotes,
-          ...perfume.middleNotes,
-          ...perfume.baseNotes,
-        ]
-          .join(" ")
-          .toLowerCase();
+        const normalize = (s: string) =>
+          s
+            .toLowerCase()
+            .replace(/[^\\w\\s]/g, " ")
+            .replace(/\\s+/g, " ")
+            .trim();
 
-        if (!searchableText.includes(searchTerm)) return false;
+        const tokens = normalize(filters.search).split(" ").filter(Boolean);
+        const searchableText = normalize(
+          [
+            perfume.id,
+            perfume.name,
+            perfume.brand,
+            perfume.originalBrand,
+            perfume.fragranceProfile,
+            ...perfume.mainAccords,
+            ...perfume.topNotes,
+            ...perfume.middleNotes,
+            ...perfume.baseNotes,
+          ].join(" "),
+        );
+
+        // require all tokens to be present (AND search)
+        const words = searchableText.split(' ');
+        const allPresent = tokens.every((t) => searchableText.includes(t) || words.some((w) => w.startsWith(t)));
+        if (!allPresent) return false;
       }
 
       // Gender filter - include unisex in both men and women searches
@@ -638,19 +650,24 @@ export default function PerfumeMixer() {
                   {ingredients.length > 0 && (
                     <div className="mt-1.5 space-y-1">
                       {/* Blend Request Text */}
-                      <div className="bg-black-800 border border-gold-300 rounded-lg p-2">
-                        <p className="text-base font-semibold text-gold-300 mb-1">
-                          Your Blend Request:
+                      <div className="bg-gradient-to-br from-black-900 to-black-800 border border-gold-400 rounded-lg p-3">
+                        <p className="text-base sm:text-lg font-semibold text-gold-200 mb-1">
+                          Your Blend Request
                         </p>
-                        <div className="bg-black-700 border border-gray-200 rounded p-2 text-sm text-gold-400 font-mono whitespace-pre-line">
-                          {`Blend: ${ingredients.map((ing) => `${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`}
+                        <div
+                          role="textbox"
+                          aria-label="Blend request text"
+                          tabIndex={0}
+                          className="bg-black-800 border border-black-700 rounded p-3 text-sm sm:text-base text-gold-100 leading-relaxed whitespace-pre-wrap break-words"
+                        >
+                          {`Blend: ${ingredients.map((ing) => `${ing.perfume.brand} ${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`}
                         </div>
                       </div>
 
                       {/* Copy Formula Button */}
                       <Button
                         onClick={() => {
-                          const formulaText = `Blend: ${ingredients.map((ing) => `${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`;
+                          const formulaText = `Blend: ${ingredients.map((ing) => `${ing.perfume.brand} ${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`;
                           navigator.clipboard
                             .writeText(formulaText)
                             .then(() => {
@@ -670,22 +687,23 @@ export default function PerfumeMixer() {
                         }}
                         variant="outline"
                         className="w-full border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white font-semibold text-lg h-10"
+                        aria-label="Copy blend request"
                       >
                         <Copy className="w-5 h-5 mr-2" />
                         Copy Blend Request
                       </Button>
 
                       {/* Instructions */}
-                      <div className="bg-black-800 border border-black-700 rounded-lg p-2 mt-2">
-                        <p className="text-xl sm:text-2xl font-bold text-gold-300 text-center mb-2">
-                          📋 How to Use Your Blend Request
+                      <div className="bg-black-900 border border-gold-300 rounded-lg p-4 mt-3">
+                        <p className="text-lg sm:text-xl font-semibold text-gold-200 mb-3 text-center">
+                          How to Use Your Blend Request
                         </p>
-                        <p className="text-sm text-gold-300 text-center">
-                          Copy the text above, then paste it into our perfume
-                          request form. Our team will review your custom blend
-                          and get back to you with availability and pricing.
-                          Remember to include you phone number.
-                        </p>
+                        <ol className="text-sm sm:text-base text-gold-200 space-y-2 list-decimal list-inside max-w-xl mx-auto">
+                          <li>Click <strong>Copy Blend Request</strong> to copy the blend text.</li>
+                          <li>Paste it into the perfume request form or include it in an email.</li>
+                          <li>Add your phone number and any special instructions (concentration, bottle size).</li>
+                          <li>Our team will reply with availability and pricing within 48 hours.</li>
+                        </ol>
                       </div>
                     </div>
                   )}
@@ -717,7 +735,7 @@ export default function PerfumeMixer() {
                       placeholder="Search fragrances..."
                       value={filters.search}
                       onChange={(e) => updateFilter("search", e.target.value)}
-                      className="pl-7 text-xs h-7 border-gold-300 focus:border-gold-500 bg-black-800"
+                      className="pl-10 text-sm h-10 border-gold-300 focus:border-gold-500 bg-black-800"
                     />
                   </div>
 
