@@ -687,7 +687,7 @@ export default function Quiz() {
                     <ArrowLeft className="w-4 h-4 mr-1" />
                     <span className="hidden sm:inline">
                       {currentQuestion === 0
-                        ? "Back to Quiz Intro"
+                        ? "Back to Intro"
                         : "Previous Question"}
                     </span>
                     <span className="sm:hidden">Back</span>
