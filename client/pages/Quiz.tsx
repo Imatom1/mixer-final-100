@@ -327,6 +327,59 @@ export default function Quiz() {
   // Check if user came from intro page or has started the quiz
   const hasStartedQuiz = !showIntro && (answers.length > 0 || showResults);
 
+  // Get featured perfumes for miniature section
+  const getFeaturedPerfumes = () => {
+    // Select diverse, popular perfumes
+    return perfumes
+      .slice()
+      .sort((a, b) => {
+        // Sort by complexity/popularity (more notes = more popular)
+        const aComplexity = a.mainAccords.length + a.topNotes.length + a.middleNotes.length + a.baseNotes.length;
+        const bComplexity = b.mainAccords.length + b.topNotes.length + b.middleNotes.length + b.baseNotes.length;
+        return bComplexity - aComplexity;
+      })
+      .slice(0, 8); // Show 8 featured perfumes
+  };
+
+  const featuredPerfumes = getFeaturedPerfumes();
+
+  // Miniature fragrance section component
+  const MiniatureFragranceSection = () => (
+    <div className="mt-8 pt-6 border-t border-gold-500/20">
+      <div className="text-center mb-6">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <Sparkles className="w-5 h-5 text-gold-600" />
+          <h3 className="text-lg font-semibold text-gold-300">Explore More Fragrances</h3>
+          <Sparkles className="w-5 h-5 text-gold-600" />
+        </div>
+        <p className="text-sm text-gold-400">
+          Discover our curated collection of premium fragrances
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6">
+        {featuredPerfumes.map((perfume) => (
+          <CompactPerfumeCard
+            key={perfume.id}
+            perfume={perfume}
+            onClick={(e) => handlePerfumeClick(perfume, e)}
+          />
+        ))}
+      </div>
+
+      <div className="text-center">
+        <Button
+          variant="outline"
+          onClick={() => navigate("/fragrances")}
+          className="border-gold-500/30 text-gold-300 hover:bg-black-900 hover:text-gold-100"
+        >
+          View All {perfumes.length} Fragrances
+          <ArrowRight className="w-4 h-4 ml-2" />
+        </Button>
+      </div>
+    </div>
+  );
+
   const startQuiz = () => {
     setShowIntro(false);
   };
