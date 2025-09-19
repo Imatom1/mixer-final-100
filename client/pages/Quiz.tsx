@@ -350,43 +350,84 @@ export default function Quiz() {
     }
   };
 
+  const normalize = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^\w\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
   const calculateRecommendations = (userAnswers: QuizOption[]) => {
-    // Collect all traits with weights
-    const traitScores: { [key: string]: number } = {};
+    const scores: Record<string, number> = {};
+    perfumes.forEach((p) => (scores[p.id] = 0));
 
-    userAnswers.forEach((answer) => {
-      answer.traits.forEach((trait) => {
-        traitScores[trait] = (traitScores[trait] || 0) + answer.weight;
-      });
-    });
+    userAnswers.forEach((answer, idx) => {
+      const qId = quizQuestions[idx]?.id || "";
+      const weight = answer.weight || 1;
+      const keywords = [answer.id, answer.text, ...(answer.traits || [])].map((k) => normalize(k));
 
-    // Score each perfume based on matching traits
-    const perfumeScores = perfumes.map((perfume) => {
-      let score = 0;
-      const searchableText = [
-        perfume.fragranceProfile,
-        ...perfume.mainAccords,
-        ...perfume.topNotes,
-        ...perfume.middleNotes,
-        ...perfume.baseNotes,
-      ]
-        .join(" ")
-        .toLowerCase();
+      perfumes.forEach((perfume) => {
+        const searchable = normalize(
+          [
+            perfume.name,
+            perfume.brand,
+            perfume.originalBrand,
+            perfume.fragranceProfile,
+            ...perfume.mainAccords,
+            ...perfume.topNotes,
+            ...perfume.middleNotes,
+            ...perfume.baseNotes,
+          ].join(" "),
+        );
 
-      Object.entries(traitScores).forEach(([trait, weight]) => {
-        if (searchableText.includes(trait.toLowerCase())) {
-          score += weight;
+        let localScore = 0;
+
+        if (qId === "season") {
+          const season = answer.id.toLowerCase();
+          const seasons = perfume.mainSeasons.map((s) => s.toLowerCase());
+          if (seasons.includes(season)) localScore += weight * 3;
+        } else if (qId === "profile") {
+          const map: Record<string, string> = { feminine: "women", masculine: "men", unisex: "unisex" };
+          const wanted = map[answer.id]?.toLowerCase();
+          if (wanted && perfume.gender.toLowerCase() === wanted) localScore += weight * 3;
+        } else if (qId === "strength") {
+          const strengthMap: Record<string, number> = { subtle: 1, moderate: 3, strong: 5 };
+          const target = strengthMap[answer.id] || 3;
+          const sillageOrder: Record<string, number> = {
+            Light: 1,
+            "Light to Moderate": 2,
+            Moderate: 3,
+            "Moderate to Strong": 4,
+            Strong: 5,
+            "Very Strong": 6,
+          };
+          const sVal = sillageOrder[perfume.sillage as keyof typeof sillageOrder] || 3;
+          const diff = Math.abs(target - sVal);
+          localScore += Math.max(0, (3 - diff)) * weight;
         }
-      });
 
-      return { perfume, score };
+        keywords.forEach((kw) => {
+          if (!kw) return;
+          if (searchable.includes(kw)) {
+            localScore += weight * 1.5;
+          }
+        });
+
+        scores[perfume.id] += localScore;
+      });
     });
 
-    // Get top 6 recommendations
-    const topRecommendations = perfumeScores
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 6)
-      .map((item) => item.perfume);
+    const perfumeScores = perfumes
+      .map((p) => ({ perfume: p, score: Math.round((scores[p.id] || 0) * 100) / 100 }))
+      .sort((a, b) => b.score - a.score);
+
+    const topRecommendations =
+      perfumeScores[0]?.score > 0
+        ? perfumeScores.slice(0, 6).map((p) => p.perfume)
+        : perfumes
+            .slice()
+            .sort((a, b) => (b.mainAccords.length + b.topNotes.length) - (a.mainAccords.length + a.topNotes.length))
+            .slice(0, 6);
 
     setRecommendations(topRecommendations);
     setShowResults(true);
