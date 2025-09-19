@@ -40,22 +40,31 @@ export default function Index() {
 
   const filteredAndSortedPerfumes = useMemo(() => {
     const filtered = perfumes.filter((perfume) => {
-      // Search filter
-      if (filters.search) {
-        const searchTerm = filters.search.toLowerCase();
-        const searchableText = [
-          perfume.name,
-          perfume.brand,
-          perfume.fragranceProfile,
-          ...perfume.mainAccords,
-          ...perfume.topNotes,
-          ...perfume.middleNotes,
-          ...perfume.baseNotes,
-        ]
-          .join(" ")
-          .toLowerCase();
+      // Search filter (normalized, tokenized)
+    if (filters.search) {
+        const normalize = (s: string) =>
+          s
+            .toLowerCase()
+            .replace(/[^\w\s]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
 
-        if (!searchableText.includes(searchTerm)) return false;
+        const tokens = normalize(filters.search).split(" ").filter(Boolean);
+        const searchableText = normalize(
+          [
+            perfume.name,
+            perfume.brand,
+            perfume.fragranceProfile,
+            ...perfume.mainAccords,
+            ...perfume.topNotes,
+            ...perfume.middleNotes,
+            ...perfume.baseNotes,
+          ].join(" "),
+        );
+
+        // Match if every token exists in searchableText
+        const allPresent = tokens.every((t) => searchableText.includes(t));
+        if (!allPresent) return false;
       }
 
       // Gender filter - include unisex in both men and women searches
