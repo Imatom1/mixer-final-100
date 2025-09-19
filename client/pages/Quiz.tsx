@@ -326,7 +326,12 @@ export default function Quiz() {
   // Check if user came from intro page or has started the quiz
   const hasStartedQuiz = !showIntro && (answers.length > 0 || showResults);
 
+  const startQuiz = () => {
+    setShowIntro(false);
+  };
+
   const restartQuiz = () => {
+    setShowIntro(true);
     setCurrentQuestion(0);
     setAnswers([]);
     setShowResults(false);
@@ -339,8 +344,8 @@ export default function Quiz() {
       // Remove the last answer when going back
       setAnswers(answers.slice(0, -1));
     } else {
-      // If on first question, go back to quiz intro
-      navigate("/quiz-intro");
+      // If on first question, go back to intro
+      setShowIntro(true);
     }
   };
 
