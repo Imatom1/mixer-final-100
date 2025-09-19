@@ -123,7 +123,7 @@ export function CompactFilters({
                       updateFilter("gender", value === "all" ? "" : value)
                     }
                   >
-                    <SelectTrigger className="h-8 text-xs border-gold-300">
+                    <SelectTrigger className="h-10 text-sm border-gold-300">
                       <SelectValue placeholder="Gender" />
                     </SelectTrigger>
                     <SelectContent>
@@ -143,7 +143,7 @@ export function CompactFilters({
                       updateFilter("season", value === "all" ? "" : value)
                     }
                   >
-                    <SelectTrigger className="h-8 text-xs border-gold-300">
+                    <SelectTrigger className="h-10 text-sm border-gold-300">
                       <SelectValue placeholder="Season" />
                     </SelectTrigger>
                     <SelectContent>
@@ -163,7 +163,7 @@ export function CompactFilters({
                       updateFilter("bestTime", value === "all" ? "" : value)
                     }
                   >
-                    <SelectTrigger className="h-8 text-xs border-gold-300">
+                    <SelectTrigger className="h-10 text-sm border-gold-300">
                       <SelectValue placeholder="Best Time" />
                     </SelectTrigger>
                     <SelectContent>
@@ -183,7 +183,7 @@ export function CompactFilters({
                       updateFilter("mainAccord", value === "all" ? "" : value)
                     }
                   >
-                    <SelectTrigger className="h-8 text-xs border-gold-300">
+                    <SelectTrigger className="h-10 text-sm border-gold-300">
                       <SelectValue placeholder="Scent Type" />
                     </SelectTrigger>
                     <SelectContent>
