@@ -98,7 +98,7 @@ export function CompactFilters({
                 <ChevronDown className="w-3 h-3 ml-1" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-72 sm:w-80 p-3" align="start">
+            <PopoverContent className="w-80 sm:w-96 p-4" align="start">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="font-semibold text-sm">Filter Options</h4>
