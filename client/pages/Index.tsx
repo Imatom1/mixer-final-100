@@ -52,8 +52,10 @@ export default function Index() {
         const tokens = normalize(filters.search).split(" ").filter(Boolean);
         const searchableText = normalize(
           [
+            perfume.id,
             perfume.name,
             perfume.brand,
+            perfume.originalBrand,
             perfume.fragranceProfile,
             ...perfume.mainAccords,
             ...perfume.topNotes,
