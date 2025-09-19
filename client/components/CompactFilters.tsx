@@ -208,10 +208,10 @@ export function CompactFilters({
             {resultCount}
           </Badge>
 
-          {/* Sort - Compact */}
-          <div className="hidden sm:block">
+          {/* Sort - Compact (now visible on small screens and wraps) */}
+          <div className="w-full sm:w-auto mt-2 sm:mt-0">
             <Select defaultValue="name">
-              <SelectTrigger className="h-7 w-24 text-xs border-gold-300 bg-black-800">
+              <SelectTrigger className="h-10 w-full sm:w-24 text-sm border-gold-300 bg-black-800">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
