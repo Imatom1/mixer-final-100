@@ -567,11 +567,8 @@ export default function Quiz() {
                               )}
                             </div>
                             <div className="flex flex-col items-center justify-center text-center px-3 sm:px-4 py-2 gap-1">
-                              <div className="font-semibold text-xs sm:text-sm leading-tight truncate">
+                              <div className="font-semibold text-xs sm:text-sm leading-tight whitespace-normal">
                                 {option.text}
-                              </div>
-                              <div className="text-[10px] sm:text-xs text-gold-300 leading-relaxed truncate px-1">
-                                {option.traits.slice(0, 1).join(", ")}
                               </div>
                             </div>
                           </div>
