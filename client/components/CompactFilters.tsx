@@ -86,7 +86,7 @@ export function CompactFilters({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-7 px-2 text-xs border-gold-400 bg-black-800 hover:bg-black-700 relative"
+                className="h-9 px-3 text-sm border-gold-400 bg-black-800 hover:bg-black-700 relative"
               >
                 <Filter className="w-3 h-3 mr-1" />
                 <span className="hidden sm:inline">Filters</span>
