@@ -938,8 +938,8 @@ export default function Quiz() {
 
   // Fragrance section component
   const FragranceSection = () => (
-    <Card className="bg-gradient-to-b from-black-900 to-black-800 border border-gold-500/10 rounded-2xl shadow-lg h-fit">
-      <CardContent className="p-6">
+    <div className="bg-gradient-to-b from-black-900 to-black-800 border-t border-gold-500/20">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Sparkles className="w-5 h-5 text-gold-600" />
@@ -990,7 +990,7 @@ export default function Quiz() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
               {filteredAndSortedPerfumes.map((perfume) => (
                 <CompactPerfumeCard
                   key={perfume.id}
@@ -1001,8 +1001,8 @@ export default function Quiz() {
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 
   return (
