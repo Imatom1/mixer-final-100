@@ -648,14 +648,14 @@ export default function PerfumeMixer() {
                           tabIndex={0}
                           className="bg-black-800 border border-black-700 rounded p-3 text-sm sm:text-base text-gold-100 leading-relaxed whitespace-pre-wrap break-words"
                         >
-                          {`Blend: ${ingredients.map((ing) => `${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`}
+                          {`Blend: ${ingredients.map((ing) => `${ing.perfume.brand} ${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`}
                         </div>
                       </div>
 
                       {/* Copy Formula Button */}
                       <Button
                         onClick={() => {
-                          const formulaText = `Blend: ${ingredients.map((ing) => `${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`;
+                          const formulaText = `Blend: ${ingredients.map((ing) => `${ing.perfume.brand} ${ing.perfume.name} ${roundPercentage(ing.percentage)}%`).join(", ")}`;
                           navigator.clipboard
                             .writeText(formulaText)
                             .then(() => {
