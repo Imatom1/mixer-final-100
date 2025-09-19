@@ -233,22 +233,31 @@ export default function PerfumeMixer() {
       if (ingredients.find((ing) => ing.perfume.id === perfume.id))
         return false;
 
-      // Search filter
+      // Search filter (tokenized, normalized)
       if (filters.search) {
-        const searchTerm = filters.search.toLowerCase();
-        const searchableText = [
-          perfume.name,
-          perfume.brand,
-          perfume.fragranceProfile,
-          ...perfume.mainAccords,
-          ...perfume.topNotes,
-          ...perfume.middleNotes,
-          ...perfume.baseNotes,
-        ]
-          .join(" ")
-          .toLowerCase();
+        const normalize = (s: string) =>
+          s
+            .toLowerCase()
+            .replace(/[^\\w\\s]/g, " ")
+            .replace(/\\s+/g, " ")
+            .trim();
 
-        if (!searchableText.includes(searchTerm)) return false;
+        const tokens = normalize(filters.search).split(" ").filter(Boolean);
+        const searchableText = normalize(
+          [
+            perfume.name,
+            perfume.brand,
+            perfume.fragranceProfile,
+            ...perfume.mainAccords,
+            ...perfume.topNotes,
+            ...perfume.middleNotes,
+            ...perfume.baseNotes,
+          ].join(" "),
+        );
+
+        // require all tokens to be present (AND search)
+        const allPresent = tokens.every((t) => searchableText.includes(t));
+        if (!allPresent) return false;
       }
 
       // Gender filter - include unisex in both men and women searches
