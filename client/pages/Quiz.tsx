@@ -138,7 +138,7 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: "season",
-    question: "Which season will you wear this most?",
+    question: "Which season do you like most?",
     options: [
       {
         id: "spring",
