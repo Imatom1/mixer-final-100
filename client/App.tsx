@@ -11,7 +11,6 @@ import Compare from "./pages/Compare";
 import CompareIntro from "./pages/CompareIntro";
 import Quiz from "./pages/Quiz";
 import QuizIntro from "./pages/QuizIntro";
-import PerfumeMixer from "./pages/PerfumeMixer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,13 +22,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<PerfumeMixer />} />
+          <Route path="/" element={<QuizIntro />} />
           <Route path="/fragrances" element={<Index />} />
           <Route path="/compare-intro" element={<CompareIntro />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/quiz-intro" element={<QuizIntro />} />
           <Route path="/quiz" element={<Quiz />} />
-          <Route path="/mixer" element={<PerfumeMixer />} />
+          {/* Perfume mixer removed — use /mixer if needed in future */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
