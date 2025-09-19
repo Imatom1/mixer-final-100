@@ -514,6 +514,36 @@ export default function Quiz() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-4 max-w-full mx-auto">
                     {quizQuestions[currentQuestion].options.map((option) => {
                       const IconComponent = option.icon;
+
+                      const isStrengthQuestion = quizQuestions[currentQuestion].id === "strength";
+
+                      const StrengthIcon = ({ level }: { level: number }) => {
+                        const bars = [1, 2, 3];
+                        return (
+                          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                            {bars.map((b, i) => {
+                              const active = b <= level;
+                              const x = 12 + i * 14;
+                              const height = 12 + b * 12; // increasing height
+                              const y = 46 - height;
+                              return (
+                                <rect
+                                  key={b}
+                                  x={x}
+                                  y={y}
+                                  width="8"
+                                  height={height}
+                                  rx="2"
+                                  fill={active ? "#FDD835" : "#3B3B3B"}
+                                />
+                              );
+                            })}
+                          </svg>
+                        );
+                      };
+
+                      const levelMap: Record<string, number> = { subtle: 1, moderate: 2, strong: 3 };
+
                       return (
                         <button
                           key={option.id}
@@ -524,7 +554,13 @@ export default function Quiz() {
                         >
                           <div className="flex flex-col h-full">
                             <div className="flex items-center justify-center p-3 sm:p-4 flex-1">
-                              <IconComponent strokeWidth={2} className="text-gold-500 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                              {isStrengthQuestion ? (
+                                <div className="w-16 h-16 flex items-center justify-center">
+                                  <StrengthIcon level={levelMap[option.id] || 1} />
+                                </div>
+                              ) : (
+                                <IconComponent strokeWidth={2} className="text-gold-500 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                              )}
                             </div>
                             <div className="flex flex-col items-center justify-center text-center px-3 sm:px-4 py-2 gap-1">
                               <div className="font-semibold text-xs sm:text-sm leading-tight break-words whitespace-normal hyphens-auto">
