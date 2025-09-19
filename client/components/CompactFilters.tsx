@@ -210,18 +210,21 @@ export function CompactFilters({
 
           {/* Sort - Compact (now visible on small screens and wraps) */}
           <div className="w-full sm:w-auto mt-2 sm:mt-0">
-            <Select defaultValue="name">
-              <SelectTrigger className="h-10 w-full sm:w-24 text-sm border-gold-300 bg-black-800">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name">A-Z</SelectItem>
-                <SelectItem value="brand">Brand</SelectItem>
-                <SelectItem value="gender">Gender</SelectItem>
-                <SelectItem value="popularity">Popular</SelectItem>
-                <SelectItem value="sillage">Sillage</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gold-400 whitespace-nowrap">Sort By:</span>
+              <Select defaultValue="name">
+                <SelectTrigger className="h-10 w-full sm:w-24 text-sm border-gold-300 bg-black-800">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name">A-Z</SelectItem>
+                  <SelectItem value="brand">Brand</SelectItem>
+                  <SelectItem value="gender">Gender</SelectItem>
+                  <SelectItem value="popularity">Popular</SelectItem>
+                  <SelectItem value="sillage">Sillage</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
       </div>
