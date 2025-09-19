@@ -466,71 +466,6 @@ export default function Quiz() {
     setFilters(initialFilters);
   };
 
-  // Full fragrance section component
-  const FullFragranceSection = () => (
-    <div className="mt-8 pt-6 border-t border-gold-500/20">
-      <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Sparkles className="w-5 h-5 text-gold-600" />
-          <h3 className="text-xl font-semibold text-gold-300">Explore All Fragrances</h3>
-          <Sparkles className="w-5 h-5 text-gold-600" />
-        </div>
-        <p className="text-sm text-gold-400">
-          Browse our complete collection of {perfumes.length} premium fragrances
-        </p>
-      </div>
-
-      {/* Filters Section */}
-      <div className="mb-6">
-        <CompactFilters
-          filters={filters}
-          onFiltersChange={setFilters}
-          onReset={resetFilters}
-          resultCount={filteredAndSortedPerfumes.length}
-        />
-      </div>
-
-      {/* Results Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h4 className="text-lg font-semibold text-gold-400">
-          Fragrances ({filteredAndSortedPerfumes.length})
-        </h4>
-        <div className="hidden sm:block">
-          <SortSelect value={sortBy} onChange={setSortBy} />
-        </div>
-      </div>
-
-      {/* Perfume Grid */}
-      {filteredAndSortedPerfumes.length === 0 ? (
-        <div className="text-center py-12">
-          <Sparkles className="w-12 h-12 text-gold-500 mx-auto mb-4" />
-          <h5 className="text-lg font-semibold text-gold-400 mb-2">
-            No fragrances found
-          </h5>
-          <p className="text-sm text-gold-300 mb-4">
-            Try adjusting your filters to discover more beautiful scents
-          </p>
-          <button
-            onClick={resetFilters}
-            className="text-gold-500 hover:text-gold-400 font-medium text-sm"
-          >
-            Clear all filters
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {filteredAndSortedPerfumes.map((perfume) => (
-            <CompactPerfumeCard
-              key={perfume.id}
-              perfume={perfume}
-              onClick={(e) => handlePerfumeClick(perfume, e)}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-
   const startQuiz = () => {
     setShowIntro(false);
   };
@@ -671,32 +606,25 @@ export default function Quiz() {
 
   const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
 
-  // Show intro page
-  if (showIntro) {
-    return (
-      <div className="relative min-h-screen bg-gradient-to-br from-black-900 via-black-900 to-black-800 overflow-hidden">
-        <Header />
-
-        <div aria-hidden className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(1200px_600px_at_50%_-100px,rgba(253,216,53,0.15),transparent)]" />
-
-        <div className="max-w-lg mx-auto px-4 py-6">
-          {/* Enhanced Header */}
-          <div className="text-center mb-6">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="relative">
-                <Heart className="w-7 h-7 text-gold-700" />
-                <Sparkles className="w-3 h-3 text-gold-500 absolute -top-1 -right-1" />
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gold-300">Fragrance Quiz</h1>
+  // Quiz content component
+  const QuizContent = () => {
+    if (showIntro) {
+      return (
+        <div className="text-center mb-6">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <div className="relative">
+              <Heart className="w-7 h-7 text-gold-700" />
+              <Sparkles className="w-3 h-3 text-gold-500 absolute -top-1 -right-1" />
             </div>
-            <p className="text-sm text-gold-300 mb-3">
-              Find your perfect scent in under 3 minutes
-            </p>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              Our AI analyzes your style, mood preferences, and occasion needs to
-              match you with fragrances that truly reflect your personality.
-            </p>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gold-300">Fragrance Quiz</h1>
           </div>
+          <p className="text-sm text-gold-300 mb-3">
+            Find your perfect scent in under 3 minutes
+          </p>
+          <p className="text-xs text-gray-500 leading-relaxed mb-6">
+            Our AI analyzes your style, mood preferences, and occasion needs to
+            match you with fragrances that truly reflect your personality.
+          </p>
 
           <div className="h-px bg-gradient-to-r from-transparent via-gold-500/20 to-transparent my-6" />
 
@@ -826,279 +754,277 @@ export default function Quiz() {
             </p>
           </div>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  // Show quiz page
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-black-800 via-black-800 to-black-800 flex flex-col overflow-hidden">
-      <Header />
-
-      {/* Page Header */}
-      <div
-        className="bg-gradient-to-r from-black-800 via-black-700 to-black-600 py-3 sm:py-4 relative overflow-hidden flex-shrink-0
-      before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-200%] before:animate-shimmer before:transition-transform"
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    if (showResults) {
+      return (
+        <div className="space-y-4">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3">
-              <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-gold-700" />
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-gold-800 via-gold-700 to-gold-600 bg-clip-text text-transparent">
-                Perfume Selector Quiz
-              </h1>
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-gold-700" />
-            </div>
-            <p className="text-sm text-gold-600 sm:text-gold-400 max-w-2xl mx-auto px-2">
-              Discover your perfect fragrance match through our
-              personality-based questionnaire
+            <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-gold-600 mx-auto mb-3" />
+            <h3 className="text-base sm:text-lg font-semibold text-gold-300 mb-2">
+              Your Perfect Fragrance Matches
+            </h3>
+            <p className="text-sm text-gold-300 max-w-2xl mx-auto px-2">
+              Based on your personality and preferences, here are the
+              fragrances that align perfectly with who you are
             </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {recommendations.map((perfume, index) => (
+              <Card
+                key={perfume.id}
+                className="border-gold-300 bg-gradient-to-br from-black-800 to-black-800 hover:from-black-700 hover:to-black-600 transition-all cursor-pointer group"
+                onClick={(e) => handlePerfumeClick(perfume, e)}
+              >
+                <CardContent className="p-3 sm:p-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Badge className="bg-gold-500 text-black-950 text-xs font-semibold">
+                        #{index + 1} Match
+                      </Badge>
+                      <Crown className="w-4 h-4 text-gold-600" />
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-gold-300 text-sm group-hover:text-gold-300 transition-colors">
+                        {perfume.name}
+                      </h4>
+                      <p className="text-xs font-semibold text-gold-300">
+                        {perfume.brand}
+                      </p>
+                      <p className="text-xs text-gold-300 mb-2">
+                        Inspired by {perfume.originalBrand}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {perfume.mainAccords.slice(0, 3).map((accord) => (
+                        <Badge
+                          key={accord}
+                          variant="outline"
+                          className="text-xs border-gold-300 text-gold-300 bg-black-800"
+                        >
+                          {accord}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <div className="flex justify-between items-center pt-2 border-t border-black-700">
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-gold-300">
+                          ${perfume.sizes[0].price}
+                        </div>
+                        <div className="text-xs text-gold-300">
+                          from {perfume.sizes[0].size}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <Button
+              variant="outline"
+              onClick={resetQuiz}
+              className="flex-1 border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white"
+            >
+              Take Quiz Again
+            </Button>
+            <Button
+              onClick={() => navigate("/fragrances")}
+              className="flex-1 bg-gold-600 hover:bg-gold-700 text-white"
+            >
+              Explore Full Collection
+            </Button>
+          </div>
+        </div>
+      );
+    }
+
+    // Quiz questions
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-gold-300">
+            Question {currentQuestion + 1} of {quizQuestions.length}
+          </h2>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={goToPreviousQuestion}
+            className="border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white"
+          >
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            {currentQuestion === 0 ? "Back to Intro" : "Back"}
+          </Button>
+        </div>
+
+        <Progress value={progress} className="h-2 bg-black-700" />
+        <p className="text-xs text-gold-300">{Math.round(progress)}% complete</p>
+
+        <div>
+          <h3 className="text-lg font-semibold text-gold-300 mb-6 text-center">
+            {quizQuestions[currentQuestion].question}
+          </h3>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {quizQuestions[currentQuestion].options.map((option) => {
+              const IconComponent = option.icon;
+              const isStrengthQuestion = quizQuestions[currentQuestion].id === "strength";
+
+              const StrengthIcon = ({ level }: { level: number }) => {
+                const bars = [1, 2, 3];
+                return (
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                    {bars.map((b, i) => {
+                      const active = b <= level;
+                      const x = 12 + i * 14;
+                      const height = 12 + b * 12;
+                      const y = 46 - height;
+                      return (
+                        <rect
+                          key={b}
+                          x={x}
+                          y={y}
+                          width="8"
+                          height={height}
+                          rx="2"
+                          fill={active ? "#FDD835" : "#3B3B3B"}
+                        />
+                      );
+                    })}
+                  </svg>
+                );
+              };
+
+              const levelMap: Record<string, number> = { subtle: 1, moderate: 2, strong: 3 };
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => handleAnswer(option)}
+                  className="group relative block w-full rounded-xl border border-gold-400/10 bg-gradient-to-br from-black-900/90 to-black-800/80 hover:from-black-800 hover:to-black-700 transition-all duration-200 transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-gold-500/40 overflow-hidden p-4"
+                >
+                  <div className="flex flex-col items-center text-center h-full">
+                    <div className="flex items-center justify-center mb-3">
+                      {isStrengthQuestion ? (
+                        <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black-800/60 p-1">
+                          <StrengthIcon level={levelMap[option.id] || 1} />
+                        </div>
+                      ) : (
+                        <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black-800/40 p-2">
+                          <IconComponent strokeWidth={2} className="text-gold-500 w-10 h-10" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="font-semibold text-sm text-gold-300">
+                      {option.text}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
+    );
+  };
 
-      <div className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-        <Card
-          className="bg-gradient-to-br from-black-800 via-black-800 to-black-700 border-2 border-gold-400 shadow-xl relative flex flex-col min-h-[calc(100vh-16rem)]
-        before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-200%] before:animate-shimmer before:transition-transform"
-        >
-          <CardHeader className="relative z-10 flex-shrink-0">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-gold-300">
-                {showResults
-                  ? "Your Perfect Matches"
-                  : `Question ${currentQuestion + 1} of ${quizQuestions.length}`}
-              </CardTitle>
-              <div className="flex gap-2 w-full sm:w-auto">
-                {hasStartedQuiz && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={restartQuiz}
-                    className="border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white flex-1 sm:flex-none"
-                  >
-                    <RefreshCw className="w-4 h-4 mr-1" />
-                    <span className="hidden sm:inline">Restart Quiz</span>
-                    <span className="sm:hidden">Restart</span>
-                  </Button>
-                )}
-                {!showResults && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={goToPreviousQuestion}
-                    className="border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white flex-1 sm:flex-none"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-1" />
-                    <span className="hidden sm:inline">
-                      {currentQuestion === 0
-                        ? "Back to Intro"
-                        : "Previous Question"}
-                    </span>
-                    <span className="sm:hidden">Back</span>
-                  </Button>
-                )}
-              </div>
+  // Fragrance section component
+  const FragranceSection = () => (
+    <Card className="bg-gradient-to-b from-black-900 to-black-800 border border-gold-500/10 rounded-2xl shadow-lg h-fit">
+      <CardContent className="p-6">
+        <div className="text-center mb-6">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="w-5 h-5 text-gold-600" />
+            <h3 className="text-xl font-semibold text-gold-300">All Fragrances</h3>
+            <Sparkles className="w-5 h-5 text-gold-600" />
+          </div>
+          <p className="text-sm text-gold-400">
+            Browse our complete collection of {perfumes.length} premium fragrances
+          </p>
+        </div>
+
+        {/* Filters */}
+        <div className="mb-6">
+          <CompactFilters
+            filters={filters}
+            onFiltersChange={setFilters}
+            onReset={resetFilters}
+            resultCount={filteredAndSortedPerfumes.length}
+          />
+        </div>
+
+        {/* Results Header */}
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-lg font-semibold text-gold-400">
+            Fragrances ({filteredAndSortedPerfumes.length})
+          </h4>
+          <div className="hidden sm:block">
+            <SortSelect value={sortBy} onChange={setSortBy} />
+          </div>
+        </div>
+
+        {/* Perfume Grid */}
+        <div className="max-h-[600px] overflow-y-auto">
+          {filteredAndSortedPerfumes.length === 0 ? (
+            <div className="text-center py-12">
+              <Sparkles className="w-12 h-12 text-gold-500 mx-auto mb-4" />
+              <h5 className="text-lg font-semibold text-gold-400 mb-2">
+                No fragrances found
+              </h5>
+              <p className="text-sm text-gold-300 mb-4">
+                Try adjusting your filters to discover more beautiful scents
+              </p>
+              <button
+                onClick={resetFilters}
+                className="text-gold-500 hover:text-gold-400 font-medium text-sm"
+              >
+                Clear all filters
+              </button>
             </div>
-
-            {!showResults && (
-              <div className="mt-4 sm:mt-6">
-                <Progress
-                  value={progress}
-                  className="h-2 sm:h-3 bg-black-700"
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {filteredAndSortedPerfumes.map((perfume) => (
+                <CompactPerfumeCard
+                  key={perfume.id}
+                  perfume={perfume}
+                  onClick={(e) => handlePerfumeClick(perfume, e)}
                 />
-                <p className="text-xs sm:text-sm text-gold-300 mt-2">
-                  {Math.round(progress)}% complete
-                </p>
-              </div>
-            )}
-          </CardHeader>
+              ))}
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
 
-          <CardContent className="relative z-10 flex-1 overflow-y-auto p-6 sm:p-8">
-            {!showResults ? (
-              <div className="space-y-6">
-                <div>
-                  <div className="max-w-3xl mx-auto px-2">
-                    <h3 className="text-lg sm:text-xl font-semibold text-gold-300 mb-6 text-center truncate overflow-hidden">
-                      {quizQuestions[currentQuestion].question}
-                    </h3>
-                  </div>
+  return (
+    <div className="relative min-h-screen bg-gradient-to-br from-black-900 via-black-900 to-black-800 overflow-hidden">
+      <Header />
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-4 max-w-full mx-auto">
-                    {quizQuestions[currentQuestion].options.map((option) => {
-                      const IconComponent = option.icon;
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(1200px_600px_at_50%_-100px,rgba(253,216,53,0.15),transparent)]" />
 
-                      const isStrengthQuestion = quizQuestions[currentQuestion].id === "strength";
+      <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Quiz Container */}
+        <div className="order-1">
+          <Card className="bg-gradient-to-b from-black-900 to-black-800 border border-gold-500/10 rounded-2xl shadow-lg">
+            <CardContent className="p-6">
+              <QuizContent />
+            </CardContent>
+          </Card>
+        </div>
 
-                      const StrengthIcon = ({ level }: { level: number }) => {
-                        const bars = [1, 2, 3];
-                        return (
-                          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                            {bars.map((b, i) => {
-                              const active = b <= level;
-                              const x = 12 + i * 14;
-                              const height = 12 + b * 12; // increasing height
-                              const y = 46 - height;
-                              return (
-                                <rect
-                                  key={b}
-                                  x={x}
-                                  y={y}
-                                  width="8"
-                                  height={height}
-                                  rx="2"
-                                  fill={active ? "#FDD835" : "#3B3B3B"}
-                                />
-                              );
-                            })}
-                          </svg>
-                        );
-                      };
-
-                      const levelMap: Record<string, number> = { subtle: 1, moderate: 2, strong: 3 };
-
-                      return (
-                        <button
-                          key={option.id}
-                          type="button"
-                          onClick={() => handleAnswer(option)}
-                          className="group relative block w-full rounded-xl border border-gold-400/10 bg-gradient-to-br from-black-900/90 to-black-800/80 hover:from-black-800 hover:to-black-700 transition-all duration-200 transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-gold-500/40 overflow-hidden"
-                          style={{ minHeight: "8.5rem" }}
-                        >
-                          <div className="flex flex-col h-full">
-                            <div className="flex items-center justify-center p-3 sm:p-4 flex-1">
-                              {isStrengthQuestion ? (
-                                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black-800/60 p-1">
-                                  <StrengthIcon level={levelMap[option.id] || 1} />
-                                </div>
-                              ) : (
-                                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black-800/40 p-2">
-                                  <IconComponent strokeWidth={2} className="text-gold-500 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14" />
-                                </div>
-                              )}
-                            </div>
-                            <div className="flex flex-col items-center justify-center text-center px-3 sm:px-4 py-2 gap-1">
-                              <div className="font-semibold text-xs sm:text-sm leading-tight whitespace-normal">
-                                {option.text}
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Full Fragrance Section */}
-                <FullFragranceSection />
-              </div>
-            ) : (
-              <div className="space-y-4 h-full flex flex-col">
-                <div className="text-center flex-shrink-0">
-                  <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-gold-600 mx-auto mb-3" />
-                  <h3 className="text-base sm:text-lg font-semibold text-gold-300 mb-2">
-                    Your Perfect Fragrance Matches
-                  </h3>
-                  <p className="text-sm text-gold-300 max-w-2xl mx-auto px-2">
-                    Based on your personality and preferences, here are the
-                    fragrances that align perfectly with who you are
-                  </p>
-                </div>
-
-                <div className="flex-1 overflow-y-auto">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-4">
-                    {recommendations.map((perfume, index) => (
-                      <Card
-                        key={perfume.id}
-                        className="border-gold-300 bg-gradient-to-br from-black-800 to-black-800 hover:from-black-700 hover:to-black-600 transition-all cursor-pointer group"
-                        onClick={(e) => handlePerfumeClick(perfume, e)}
-                      >
-                        <CardContent className="p-3 sm:p-4 md:p-5">
-                          <div className="space-y-2 sm:space-y-3">
-                            <div className="flex items-center justify-between">
-                              <Badge className="bg-gold-500 text-black-950 text-xs font-semibold">
-                                #{index + 1} Match
-                              </Badge>
-                              <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-gold-600" />
-                            </div>
-
-                            <div>
-                              <h4 className="font-bold text-gold-300 text-sm sm:text-base md:text-lg group-hover:text-gold-300 transition-colors">
-                                {perfume.name}
-                              </h4>
-                              <p className="text-xs sm:text-sm font-semibold text-gold-300">
-                                {perfume.brand}
-                              </p>
-                              <p className="text-xs text-gold-300 mb-2 sm:mb-3">
-                                Inspired by {perfume.originalBrand}
-                              </p>
-                            </div>
-
-                            <div className="flex flex-wrap gap-1 mb-2 sm:mb-3">
-                              {perfume.mainAccords.map((accord) => (
-                                <Badge
-                                  key={accord}
-                                  variant="outline"
-                                  className="text-xs border-gold-300 text-gold-300 bg-black-800"
-                                >
-                                  {accord}
-                                </Badge>
-                              ))}
-                            </div>
-
-                            <div className="space-y-1 sm:space-y-2">
-                              <p className="text-xs sm:text-sm text-gold-400">
-                                <span className="font-semibold">Profile:</span>{" "}
-                                {perfume.fragranceProfile}
-                              </p>
-                              <p className="text-xs sm:text-sm text-gold-400">
-                                <span className="font-semibold">Best for:</span>{" "}
-                                {perfume.bestTime}
-                              </p>
-                            </div>
-
-                            <div className="flex justify-between items-center pt-2 border-t border-black-700">
-                              <div className="text-right">
-                                <div className="text-sm sm:text-base md:text-lg font-bold text-gold-300">
-                                  ${perfume.sizes[0].price}
-                                </div>
-                                <div className="text-xs text-gold-300">
-                                  from {perfume.sizes[0].size}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Full Fragrance Section */}
-                <FullFragranceSection />
-
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 flex-shrink-0">
-                  <Button
-                    variant="outline"
-                    onClick={resetQuiz}
-                    className="flex-1 border-gold-400 text-gold-300 hover:bg-black-800 hover:text-white font-semibold py-2 sm:py-3 text-sm sm:text-base"
-                  >
-                    Take Quiz Again
-                  </Button>
-                  <Button
-                    onClick={() => navigate("/fragrances")}
-                    className="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-semibold py-2 sm:py-3 text-sm sm:text-base"
-                  >
-                    <span className="hidden sm:inline">
-                      Explore Full Collection
-                    </span>
-                    <span className="sm:hidden">Explore Collection</span>
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        {/* Fragrance List Container */}
+        <div className="order-2">
+          <FragranceSection />
+        </div>
       </div>
 
       {/* Perfume Detail Modal */}
