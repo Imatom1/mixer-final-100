@@ -507,9 +507,11 @@ export default function Quiz() {
             {!showResults ? (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-gold-300 mb-6 text-center break-words whitespace-normal hyphens-auto px-2">
-                    {quizQuestions[currentQuestion].question}
-                  </h3>
+                  <div className="max-w-3xl mx-auto px-2">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gold-300 mb-6 text-center truncate overflow-hidden">
+                      {quizQuestions[currentQuestion].question}
+                    </h3>
+                  </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-4 max-w-full mx-auto">
                     {quizQuestions[currentQuestion].options.map((option) => {
@@ -563,11 +565,11 @@ export default function Quiz() {
                               )}
                             </div>
                             <div className="flex flex-col items-center justify-center text-center px-3 sm:px-4 py-2 gap-1">
-                              <div className="font-semibold text-xs sm:text-sm leading-tight break-words whitespace-normal hyphens-auto">
+                              <div className="font-semibold text-xs sm:text-sm leading-tight truncate">
                                 {option.text}
                               </div>
-                              <div className="text-[10px] sm:text-xs text-gold-300 leading-relaxed break-words whitespace-normal hyphens-auto px-1">
-                                {option.traits.slice(0, 3).join(", ")}
+                              <div className="text-[10px] sm:text-xs text-gold-300 leading-relaxed truncate px-1">
+                                {option.traits.slice(0, 2).join(", ")}
                               </div>
                             </div>
                           </div>
