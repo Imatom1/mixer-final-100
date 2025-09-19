@@ -329,56 +329,205 @@ export default function Quiz() {
   // Check if user came from intro page or has started the quiz
   const hasStartedQuiz = !showIntro && (answers.length > 0 || showResults);
 
-  // Get featured perfumes for miniature section
-  const getFeaturedPerfumes = () => {
-    // Select diverse, popular perfumes
-    return perfumes
-      .slice()
-      .sort((a, b) => {
-        // Sort by complexity/popularity (more notes = more popular)
-        const aComplexity = a.mainAccords.length + a.topNotes.length + a.middleNotes.length + a.baseNotes.length;
-        const bComplexity = b.mainAccords.length + b.topNotes.length + b.middleNotes.length + b.baseNotes.length;
-        return bComplexity - aComplexity;
-      })
-      .slice(0, 8); // Show 8 featured perfumes
+  // Full fragrance section state
+  const initialFilters: FilterState = {
+    search: "",
+    gender: "",
+    season: "",
+    bestTime: "",
+    mainAccord: "",
   };
 
-  const featuredPerfumes = getFeaturedPerfumes();
+  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [sortBy, setSortBy] = useState<SortOption>("popularity");
 
-  // Miniature fragrance section component
-  const MiniatureFragranceSection = () => (
+  // Filter and sort perfumes
+  const filteredAndSortedPerfumes = useMemo(() => {
+    const filtered = perfumes.filter((perfume) => {
+      // Search filter (normalized, tokenized)
+      if (filters.search) {
+        const normalize = (s: string) =>
+          s
+            .toLowerCase()
+            .replace(/[^\w\s]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+
+        const tokens = normalize(filters.search).split(" ").filter(Boolean);
+        const searchableText = normalize(
+          [
+            perfume.id,
+            perfume.name,
+            perfume.brand,
+            perfume.originalBrand,
+            perfume.fragranceProfile,
+            ...perfume.mainAccords,
+            ...perfume.topNotes,
+            ...perfume.middleNotes,
+            ...perfume.baseNotes,
+          ].join(" "),
+        );
+
+        // Match if every token exists in searchableText OR matches a word prefix
+        const words = searchableText.split(' ');
+        const allPresent = tokens.every((t) =>
+          searchableText.includes(t) || words.some((w) => w.startsWith(t)),
+        );
+        if (!allPresent) return false;
+      }
+
+      // Gender filter - include unisex in both men and women searches
+      if (filters.gender) {
+        if (
+          filters.gender === "Men" &&
+          perfume.gender !== "Men" &&
+          perfume.gender !== "Unisex"
+        )
+          return false;
+        if (
+          filters.gender === "Women" &&
+          perfume.gender !== "Women" &&
+          perfume.gender !== "Unisex"
+        )
+          return false;
+        if (filters.gender === "Unisex" && perfume.gender !== "Unisex")
+          return false;
+      }
+
+      // Main accord filter
+      if (filters.mainAccord) {
+        const hasMatchingAccord = perfume.mainAccords.some(
+          (accord) =>
+            accord.toLowerCase().includes(filters.mainAccord.toLowerCase()) ||
+            filters.mainAccord.toLowerCase().includes(accord.toLowerCase()),
+        );
+        if (!hasMatchingAccord) return false;
+      }
+
+      // Season filter
+      if (filters.season && !perfume.mainSeasons.includes(filters.season))
+        return false;
+
+      // Best time filter
+      if (filters.bestTime && perfume.bestTime !== filters.bestTime)
+        return false;
+
+      return true;
+    });
+
+    // Sort the filtered results
+    const sorted = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case "name":
+          return a.name.localeCompare(b.name);
+        case "brand":
+          return a.brand.localeCompare(b.brand);
+        case "gender":
+          const genderOrder = { Women: 1, Men: 2, Unisex: 3 };
+          return (
+            (genderOrder[a.gender as keyof typeof genderOrder] || 0) -
+            (genderOrder[b.gender as keyof typeof genderOrder] || 0)
+          );
+        case "popularity":
+          // Sort by popularity (based on number of main accords + complexity)
+          const aPopularity =
+            a.mainAccords.length +
+            a.topNotes.length +
+            a.middleNotes.length +
+            a.baseNotes.length;
+          const bPopularity =
+            b.mainAccords.length +
+            b.topNotes.length +
+            b.middleNotes.length +
+            b.baseNotes.length;
+          return bPopularity - aPopularity; // Higher complexity = more popular
+        case "sillage":
+          const sillageOrder = {
+            Light: 1,
+            "Light to Moderate": 2,
+            Moderate: 3,
+            "Moderate to Strong": 4,
+            Strong: 5,
+            "Very Strong": 6,
+          };
+          return (
+            (sillageOrder[b.sillage as keyof typeof sillageOrder] || 0) -
+            (sillageOrder[a.sillage as keyof typeof sillageOrder] || 0)
+          );
+        default:
+          return 0;
+      }
+    });
+
+    return sorted;
+  }, [filters, sortBy]);
+
+  const resetFilters = () => {
+    setFilters(initialFilters);
+  };
+
+  // Full fragrance section component
+  const FullFragranceSection = () => (
     <div className="mt-8 pt-6 border-t border-gold-500/20">
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Sparkles className="w-5 h-5 text-gold-600" />
-          <h3 className="text-lg font-semibold text-gold-300">Explore More Fragrances</h3>
+          <h3 className="text-xl font-semibold text-gold-300">Explore All Fragrances</h3>
           <Sparkles className="w-5 h-5 text-gold-600" />
         </div>
         <p className="text-sm text-gold-400">
-          Discover our curated collection of premium fragrances
+          Browse our complete collection of {perfumes.length} premium fragrances
         </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6">
-        {featuredPerfumes.map((perfume) => (
-          <CompactPerfumeCard
-            key={perfume.id}
-            perfume={perfume}
-            onClick={(e) => handlePerfumeClick(perfume, e)}
-          />
-        ))}
+      {/* Filters Section */}
+      <div className="mb-6">
+        <CompactFilters
+          filters={filters}
+          onFiltersChange={setFilters}
+          onReset={resetFilters}
+          resultCount={filteredAndSortedPerfumes.length}
+        />
       </div>
 
-      <div className="text-center">
-        <Button
-          variant="outline"
-          onClick={() => navigate("/fragrances")}
-          className="border-gold-500/30 text-gold-300 hover:bg-black-900 hover:text-gold-100"
-        >
-          View All {perfumes.length} Fragrances
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
+      {/* Results Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h4 className="text-lg font-semibold text-gold-400">
+          Fragrances ({filteredAndSortedPerfumes.length})
+        </h4>
+        <div className="hidden sm:block">
+          <SortSelect value={sortBy} onChange={setSortBy} />
+        </div>
       </div>
+
+      {/* Perfume Grid */}
+      {filteredAndSortedPerfumes.length === 0 ? (
+        <div className="text-center py-12">
+          <Sparkles className="w-12 h-12 text-gold-500 mx-auto mb-4" />
+          <h5 className="text-lg font-semibold text-gold-400 mb-2">
+            No fragrances found
+          </h5>
+          <p className="text-sm text-gold-300 mb-4">
+            Try adjusting your filters to discover more beautiful scents
+          </p>
+          <button
+            onClick={resetFilters}
+            className="text-gold-500 hover:text-gold-400 font-medium text-sm"
+          >
+            Clear all filters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {filteredAndSortedPerfumes.map((perfume) => (
+            <CompactPerfumeCard
+              key={perfume.id}
+              perfume={perfume}
+              onClick={(e) => handlePerfumeClick(perfume, e)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 
