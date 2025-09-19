@@ -292,21 +292,21 @@ const quizQuestions: QuizQuestion[] = [
       {
         id: "subtle",
         text: "Subtle",
-        traits: ["Close to skin, intimate"],
+        traits: ["Intimate"],
         weight: 1,
         icon: VolumeX,
       },
       {
         id: "moderate",
         text: "Moderate",
-        traits: ["Noticeable but not overpowering"],
+        traits: ["Noticeable"],
         weight: 2,
         icon: Volume,
       },
       {
         id: "strong",
         text: "Strong",
-        traits: ["Bold and long-lasting"],
+        traits: ["Bold"],
         weight: 3,
         icon: Volume2,
       },
@@ -571,7 +571,7 @@ export default function Quiz() {
                                 {option.text}
                               </div>
                               <div className="text-[10px] sm:text-xs text-gold-300 leading-relaxed truncate px-1">
-                                {option.traits.slice(0, 2).join(", ")}
+                                {option.traits.slice(0, 1).join(", ")}
                               </div>
                             </div>
                           </div>
