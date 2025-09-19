@@ -557,11 +557,13 @@ export default function Quiz() {
                           <div className="flex flex-col h-full">
                             <div className="flex items-center justify-center p-3 sm:p-4 flex-1">
                               {isStrengthQuestion ? (
-                                <div className="w-16 h-16 flex items-center justify-center">
+                                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black-800/60 p-1">
                                   <StrengthIcon level={levelMap[option.id] || 1} />
                                 </div>
                               ) : (
-                                <IconComponent strokeWidth={2} className="text-gold-500 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black-800/40 p-2">
+                                  <IconComponent strokeWidth={2} className="text-gold-500 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14" />
+                                </div>
                               )}
                             </div>
                             <div className="flex flex-col items-center justify-center text-center px-3 sm:px-4 py-2 gap-1">
