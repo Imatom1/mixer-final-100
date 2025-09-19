@@ -104,9 +104,9 @@
     height: -webkit-fill-available;
   }
   html, body {
-    height: 100%;
+    height: auto;
     min-height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
   }
   #root {
     min-height: 100svh;
