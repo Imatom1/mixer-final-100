@@ -168,13 +168,6 @@ const quizQuestions: QuizQuestion[] = [
         weight: 3,
         icon: Snowflake,
       },
-      {
-        id: "allyear",
-        text: "All year round",
-        traits: ["Versatile", "Balanced", "Timeless", "Classic", "Adaptable"],
-        weight: 1,
-        icon: Calendar,
-      },
     ],
   },
   {
