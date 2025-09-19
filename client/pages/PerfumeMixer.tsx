@@ -735,7 +735,7 @@ export default function PerfumeMixer() {
                       placeholder="Search fragrances..."
                       value={filters.search}
                       onChange={(e) => updateFilter("search", e.target.value)}
-                      className="pl-7 text-xs h-7 border-gold-300 focus:border-gold-500 bg-black-800"
+                      className="pl-10 text-sm h-10 border-gold-300 focus:border-gold-500 bg-black-800"
                     />
                   </div>
 
