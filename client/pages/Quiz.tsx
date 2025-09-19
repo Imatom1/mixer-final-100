@@ -1011,9 +1011,9 @@ export default function Quiz() {
 
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(1200px_600px_at_50%_-100px,rgba(253,216,53,0.15),transparent)]" />
 
-      <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="space-y-6">
         {/* Quiz Container */}
-        <div className="order-1">
+        <div className="max-w-4xl mx-auto px-4">
           <Card className="bg-gradient-to-b from-black-900 to-black-800 border border-gold-500/10 rounded-2xl shadow-lg">
             <CardContent className="p-6">
               <QuizContent />
@@ -1021,8 +1021,8 @@ export default function Quiz() {
           </Card>
         </div>
 
-        {/* Fragrance List Container */}
-        <div className="order-2">
+        {/* Full Width Fragrance Section */}
+        <div className="w-full">
           <FragranceSection />
         </div>
       </div>
