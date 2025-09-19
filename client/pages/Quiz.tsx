@@ -837,6 +837,9 @@ export default function Quiz() {
                     })}
                   </div>
                 </div>
+
+                {/* Miniature Fragrance Section */}
+                <MiniatureFragranceSection />
               </div>
             ) : (
               <div className="space-y-4 h-full flex flex-col">
