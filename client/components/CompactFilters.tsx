@@ -70,13 +70,13 @@ export function CompactFilters({
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
           {/* Search - Always visible */}
-          <div className="relative flex-1 max-w-xs">
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gold-400" />
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gold-400" />
             <Input
               placeholder="Search..."
               value={filters.search}
               onChange={(e) => updateFilter("search", e.target.value)}
-              className="pl-7 pr-3 h-7 text-xs border-gold-300 focus:border-gold-500 bg-black-800"
+              className="pl-10 pr-4 h-10 text-sm border-gold-300 focus:border-gold-500 bg-black-800"
             />
           </div>
 
