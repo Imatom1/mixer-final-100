@@ -21,11 +21,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<QuizIntro />} />
+          <Route path="/" element={<Quiz />} />
           <Route path="/fragrances" element={<Index />} />
           <Route path="/compare-intro" element={<CompareIntro />} />
           <Route path="/compare" element={<Compare />} />
-          <Route path="/quiz-intro" element={<QuizIntro />} />
           <Route path="/quiz" element={<Quiz />} />
           {/* Perfume mixer removed — use /mixer if needed in future */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
