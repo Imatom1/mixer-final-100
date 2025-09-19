@@ -551,8 +551,8 @@ export default function Quiz() {
                           key={option.id}
                           type="button"
                           onClick={() => handleAnswer(option)}
-                          className="group relative block w-full rounded-2xl border border-gold-400/60 bg-black-900/70 hover:bg-black-800 transition-all duration-200 hover:shadow-[0_0_0_2px_rgba(253,216,53,0.4)] focus:outline-none focus:ring-2 focus:ring-gold-500/40 overflow-hidden"
-                          style={{ minHeight: "9rem" }}
+                          className="group relative block w-full rounded-xl border border-gold-400/10 bg-gradient-to-br from-black-900/90 to-black-800/80 hover:from-black-800 hover:to-black-700 transition-all duration-200 transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-gold-500/40 overflow-hidden"
+                          style={{ minHeight: "8.5rem" }}
                         >
                           <div className="flex flex-col h-full">
                             <div className="flex items-center justify-center p-3 sm:p-4 flex-1">
