@@ -68,7 +68,7 @@ export function CompactFilters({
     before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-gold-500/10 before:to-transparent before:translate-x-[-200%] before:animate-shimmer before:transition-transform"
     >
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 md:gap-5">
           {/* Search - Always visible */}
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gold-400" />
