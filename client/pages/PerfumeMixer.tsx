@@ -256,7 +256,8 @@ export default function PerfumeMixer() {
         );
 
         // require all tokens to be present (AND search)
-        const allPresent = tokens.every((t) => searchableText.includes(t));
+        const words = searchableText.split(' ');
+        const allPresent = tokens.every((t) => searchableText.includes(t) || words.some((w) => w.startsWith(t)));
         if (!allPresent) return false;
       }
 
