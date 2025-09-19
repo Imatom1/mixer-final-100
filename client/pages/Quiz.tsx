@@ -44,6 +44,8 @@ import {
 import { Header } from "../components/Header";
 import { PerfumeDetail } from "../components/PerfumeDetail";
 import { CompactPerfumeCard } from "../components/CompactPerfumeCard";
+import { SortSelect, SortOption } from "../components/SortSelect";
+import { CompactFilters, FilterState } from "../components/CompactFilters";
 import { perfumes, Perfume } from "../data/perfumes";
 
 interface QuizQuestion {
