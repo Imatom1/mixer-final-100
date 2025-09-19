@@ -1006,7 +1006,7 @@ export default function Quiz() {
   );
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-black-900 via-black-900 to-black-800 overflow-hidden">
+    <div className="relative bg-gradient-to-br from-black-900 via-black-900 to-black-800">
       <Header />
 
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(1200px_600px_at_50%_-100px,rgba(253,216,53,0.15),transparent)]" />
