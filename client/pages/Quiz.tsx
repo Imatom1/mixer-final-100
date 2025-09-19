@@ -445,6 +445,7 @@ export default function Quiz() {
   };
 
   const resetQuiz = () => {
+    setShowIntro(true);
     setCurrentQuestion(0);
     setAnswers([]);
     setShowResults(false);
