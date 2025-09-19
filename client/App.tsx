@@ -10,7 +10,6 @@ import Index from "./pages/Index";
 import Compare from "./pages/Compare";
 import CompareIntro from "./pages/CompareIntro";
 import Quiz from "./pages/Quiz";
-import QuizIntro from "./pages/QuizIntro";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
