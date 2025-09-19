@@ -35,6 +35,11 @@ import {
   Volume,
   VolumeX,
   Volume2,
+  Clock,
+  Brain,
+  Target,
+  ArrowRight,
+  Check,
 } from "lucide-react";
 import { Header } from "../components/Header";
 import { PerfumeDetail } from "../components/PerfumeDetail";
