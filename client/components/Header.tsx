@@ -11,7 +11,6 @@ export function Header() {
     { name: "Quiz", href: "/quiz-intro", icon: Heart },
     { name: "Fragrances", href: "/fragrances", icon: Crown },
     { name: "Compare", href: "/compare", icon: Scale },
-    { name: "Mixer", href: "/mixer", icon: Beaker },
   ];
 
   return (
@@ -43,10 +42,7 @@ export function Header() {
               const isActive = item.href === location.pathname;
 
               const base = "flex items-center gap-2 px-3 py-2 rounded-lg font-semibold transition-all duration-200";
-              const isMixer = item.name === "Mixer";
-              const classes = isMixer
-                ? `${base} bg-gold-500 text-black-950 shadow-md`
-                : isActive
+              const classes = isActive
                 ? `${base} bg-gold-500 text-black-950 shadow-md`
                 : `${base} text-gold-300 hover:bg-gold-600 hover:text-black-950`;
 
@@ -83,14 +79,13 @@ export function Header() {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.href === location.pathname;
-                const isMixer = item.name === "Mixer";
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg font-semibold transition-colors ${
-                      isMixer || isActive
+                      isActive
                         ? "bg-gold-500 text-black-950"
                         : "text-gold-300 hover:bg-gold-600 hover:text-black-950"
                     }`}
