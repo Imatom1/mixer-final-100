@@ -314,6 +314,7 @@ const quizQuestions: QuizQuestion[] = [
 
 export default function Quiz() {
   const navigate = useNavigate();
+  const [showIntro, setShowIntro] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<QuizOption[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -323,7 +324,7 @@ export default function Quiz() {
   const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
 
   // Check if user came from intro page or has started the quiz
-  const hasStartedQuiz = answers.length > 0 || showResults;
+  const hasStartedQuiz = !showIntro && (answers.length > 0 || showResults);
 
   const restartQuiz = () => {
     setCurrentQuestion(0);
