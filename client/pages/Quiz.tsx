@@ -923,6 +923,9 @@ export default function Quiz() {
                   </div>
                 </div>
 
+                {/* Miniature Fragrance Section */}
+                <MiniatureFragranceSection />
+
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 flex-shrink-0">
                   <Button
                     variant="outline"
