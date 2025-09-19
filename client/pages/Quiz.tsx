@@ -43,6 +43,7 @@ import {
 } from "lucide-react";
 import { Header } from "../components/Header";
 import { PerfumeDetail } from "../components/PerfumeDetail";
+import { CompactPerfumeCard } from "../components/CompactPerfumeCard";
 import { perfumes, Perfume } from "../data/perfumes";
 
 interface QuizQuestion {
