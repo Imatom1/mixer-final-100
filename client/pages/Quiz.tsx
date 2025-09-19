@@ -989,8 +989,8 @@ export default function Quiz() {
                   </div>
                 </div>
 
-                {/* Miniature Fragrance Section */}
-                <MiniatureFragranceSection />
+                {/* Full Fragrance Section */}
+                <FullFragranceSection />
               </div>
             ) : (
               <div className="space-y-4 h-full flex flex-col">
@@ -1074,8 +1074,8 @@ export default function Quiz() {
                   </div>
                 </div>
 
-                {/* Miniature Fragrance Section */}
-                <MiniatureFragranceSection />
+                {/* Full Fragrance Section */}
+                <FullFragranceSection />
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 flex-shrink-0">
                   <Button
